@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/styles.css">
+    <title>Index</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="./assets/logo.jpeg" alt="">
+        </div>
+        <div class="container-forms">
+            <form id="form-login" autocomplete="off">
+                <div class="container-form container-LogIn">
+                    <h1 class="margin-bottom-3">Log In</h1>
+                    <input class="margin-bottom-3" type="text" id="name" autocomplete="off" placeholder="Nome">
+                    <input class="margin-bottom-3" type="password" id="password" placeholder="Senha">
+                    <input class="margin-bottom-3" type="submit" class="submit" onclick="onClickLogIn(event)" value="Logar">
+                </div>
+                <a href="#" id="login-button" onclick="switchForm(event.target)">Desejo fazer meu cadastro</a>
+            </form>
+            <form id="form-register" class="disabled" >
+                <div class="container-form container-Create-User">
+                    <h1 class="margin-bottom-3">Sign Up</h1>
+                    <input class="margin-bottom-3" type="text" id="createUser" autocomplete="off" placeholder="Nome">
+                    <input class="margin-bottom-3" type="password" id="createPassword" placeholder="Senha">
+                    <input class="margin-bottom-3" type="password" id="repeatPassword" placeholder="Confirme sua senha">
+                    <input class="margin-bottom-3" type="submit" class="submit" onclick="onClickCreateUser(event)" value="Salvar">
+                </div>
+                <a href="#" id="register-button" onclick="switchForm(event.target)">Já possuo uma conta</a>
+            </form>
+        </div>
+    </div>
+        
+    <script src="./JS/scripts.js"></script>
+</body>
+</html>
