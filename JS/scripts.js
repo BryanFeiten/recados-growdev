@@ -124,17 +124,20 @@ function saveCRUD(event) {
     event.preventDefault();
 
     const userLogged = users.find(p=>p.logged===true);
-    const text = document.querySelector('#inputCRUD');
+    const description = document.querySelector('#descriptionCRUD')
+    const text = document.querySelector('#textCRUD');
 
-    checkMessage(text, userLogged);
+    checkMessage(description, text, userLogged);
     
+    description.value = ''; 
     text.value = '';
 }
 
-function checkMessage(text, userLogged) {
-    if(text.value.length>=5) {
+function checkMessage(description, text, userLogged) {
+    if(description.value.length>=5 && text.value.length>=5) {
         userLogged.messages.push({
             messageId: Math.floor(Math.random() * 65536),
+            description: description.value,
             textMessage: text.value,
         });
         LS.setItem('users', JSON.stringify(users));
@@ -148,7 +151,7 @@ function updateMessages() {
     const getUsers = JSON.parse(localStorage.getItem('users'));
     const contentCRUD = document.querySelector('#contentCRUD');
     contentCRUD.innerHTML = '';
-    getUsers.find(p=>p.logged===true).messages.map(message => contentCRUD.innerHTML += `<div class="message" data-id="${message.messageId}"><p>${message.textMessage}</p><div class="controllMessage"><a href="#" onclick="editMessage(event)" id="btnEdit">Editar</a><a href="#" onclick="removeMessage(event)" id="btnDelete">Delete</a></div></div>`);
+    getUsers.find(p=>p.logged===true).messages.map(message => contentCRUD.innerHTML += `<div class="message" data-id="${message.messageId}"><p>${message.description}</p><p>${message.textMessage}</p><div class="controllMessage"><a href="#" onclick="editMessage(event)" id="btnEdit">Editar</a><a href="#" onclick="removeMessage(event)" id="btnDelete">Delete</a></div></div>`);
 }
 
 function removeMessage(event) {
@@ -160,12 +163,29 @@ function removeMessage(event) {
 
 function editMessage(event) {
     const dataId = parseInt(event.target.parentNode.parentNode.getAttribute('data-id'));
-    const changeForThis = prompt('Qual a nova descrição?');
-    if(changeForThis.length>=4) {
-        users.find(userLogged => userLogged.logged === true).messages.filter(m => m.messageId === dataId ? m.textMessage = changeForThis : '')
+    const changeDescription = prompt(`Qual o novo descritivo? Se quiser continuar com o mesmo, digite ${dataId}`);
+    const changeText = prompt(`Qual o novo detalhamento? Se quiser continuar com o mesmo, digite ${dataId}`);
+    if(changeDescription.length >= 5 && changeText == dataId) {
+        users.find(userLogged => userLogged.logged === true).messages.filter(m => m.messageId === dataId ? m.description = changeDescription : '')
         LS.setItem('users', JSON.stringify(users));
         updateMessages();
+        console.log("mudar a descrição");
+    } else if (changeDescription == dataId && changeText.length >= 5) {
+        users.find(userLogged => userLogged.logged === true).messages.filter(m => m.messageId === dataId ? m.textMessage = changeText : '')
+        LS.setItem('users', JSON.stringify(users));
+        updateMessages();
+        console.log("mudar o texto");
+    } else if (changeDescription.length >= 5 && changeText.length >= 5) {
+        users.find(userLogged => userLogged.logged === true).messages.filter(m => {
+            if(m.messageId === dataId) {
+                m.description = changeDescription;
+                m.textMessage = changeText;
+            }
+        })
+        LS.setItem('users', JSON.stringify(users));
+        updateMessages();
+        console.log("mudar os dois");
     } else {
-        alert('Digite pelo menos 4 caractéres')
+        alert('Digite pelo menos 5 caractéres');
     }
 }
