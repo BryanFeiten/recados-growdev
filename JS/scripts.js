@@ -8,8 +8,7 @@ if(location.href.indexOf('sobre.html')>=0 && !users.filter(p=>p.logged===true).l
 }
 
 if(location.href.indexOf('sobre.html')>=0) {
-    document.querySelector('#userLogged').innerHTML = users.find(user => user.logged === true).name;
-    const containerCRUD = document.querySelector('.contentCRUD');
+    document.querySelector('#userLogged').innerHTML = users.find(user => user.logged === true).username;
     updateMessages();
 }
 
@@ -25,15 +24,15 @@ function onClickCreateUser(event) {
 
     let found = false;
 
-    const name = document.querySelector('#createUser')
+    const username = document.querySelector('#createUser')
     const password = document.querySelector('#createPassword')
     const repeatPassword = document.querySelector('#repeatPassword')
 
-    const nameValue = name.value.toUpperCase();
+    const usernameValue = username.value.toUpperCase();
     const passwordValue = password.value.toUpperCase();
     const repeatPasswordValue = repeatPassword.value.toUpperCase();
 
-    if(users.filter(p=>p.name===nameValue).length > 0) {
+    if(users.filter(p=>p.username===usernameValue).length > 0) {
         alert('Já existe um usuário com o mesmo nome! Escolha outro.')
         return
     }
@@ -43,21 +42,21 @@ function onClickCreateUser(event) {
         return
     }
 
-    found = checkInputs(nameValue, passwordValue, repeatPasswordValue);
+    found = checkInputs(usernameValue, passwordValue, repeatPasswordValue);
 
     if(!found){
         alert('Seu usuário precisa ter mais de 3 caractéres, e sua senha, mais de 6')
     }
 
-    clearFields(name, password, repeatPassword);
+    clearFields(username, password, repeatPassword);
     switchForm();
 }
 
-function checkInputs(name, password, repeatPassword) {
+function checkInputs(username, password, repeatPassword) {
     found = false;
     
-    if(name.length > 3 && password.length > 6 && password === repeatPassword) {
-        users.push(createNewUser(name, password));
+    if(username.length > 3 && password.length > 6 && password === repeatPassword) {
+        users.push(createNewUser(username, password));
         LS.setItem('users', JSON.stringify(users));
         found = true;
         alert('Usuário criado com sucesso');
@@ -66,9 +65,9 @@ function checkInputs(name, password, repeatPassword) {
     return found;
 }
 
-function createNewUser(name, password) {
+function createNewUser(username, password) {
     const newUser = {
-        name: name,
+        username: username,
         password: password,
         messages: [],
         logged: false
@@ -79,13 +78,13 @@ function createNewUser(name, password) {
 
 function onClickLogIn(event) {
     event.preventDefault();
-    const name = document.querySelector('#name');
+    const username = document.querySelector('#username');
     const password = document.querySelector('#password');
 
-    const nameValue = name.value.toUpperCase();
+    const usernameValue = username.value.toUpperCase();
     const passwordValue = password.value.toUpperCase();
 
-    if(!users.filter(index => index.name===nameValue&&index.password===passwordValue ? index.logged = true : '').length > 0) {
+    if(!users.filter(index => index.username===usernameValue&&index.password===passwordValue ? index.logged = true : '').length > 0) {
         alert('Nome ou senha incorreto(s)')
         return
     } else {
