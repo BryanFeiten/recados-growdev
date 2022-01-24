@@ -4,33 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/styles.css">
+    <link rel="stylesheet" href="./CSS/bootstrap.css">
+    <link rel="stylesheet" href="./CSS/complement.css">
     <title>Index</title>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="./assets/logo.jpeg" alt="">
+    <div class="bg-black d-flex">
+        <div id="logo" class="col-6">
+            <img id="logo" src="./assets/logo.jpeg" alt="Application Logo">
         </div>
-        <div class="container-forms">
+        <div class="m-auto col-6 text-center">
             <form id="form-login" autocomplete="off">
-                <div class="container-form container-LogIn">
-                    <h1 class="margin-bottom-3">Log In</h1>
-                    <input class="margin-bottom-3" type="text" id="name" autocomplete="off" placeholder="Nome">
-                    <input class="margin-bottom-3" type="password" id="password" placeholder="Senha">
-                    <input class="margin-bottom-3" type="submit" class="submit" onclick="onClickLogIn(event)" value="Logar">
+                <div class="widthForms m-auto card col-6 p-1 text-left bg-blue">
+                    <h1 class="card-header text-white h2 mb-1">Log In</h1>
+                    <div class="card-body bg-white d-flex flex-column">
+                        <input class="mb-1" type="text" id="name" autocomplete="off" placeholder="Nome">
+                        <input class="mb-1" type="password" id="password" placeholder="Senha">
+                        <input class="mb-1 btn btn-primary" type="submit" class="submit" onclick="onClickLogIn(event)" value="Logar">
+                    </div>
                 </div>
-                <a href="#" id="login-button" onclick="switchForm(event.target)">Desejo fazer meu cadastro</a>
+                <a class="text-white" href="#" id="login-button" onclick="switchForm(event.target)">Desejo fazer meu cadastro</a>
             </form>
-            <form id="form-register" class="disabled" >
-                <div class="container-form container-Create-User">
-                    <h1 class="margin-bottom-3">Sign Up</h1>
-                    <input class="margin-bottom-3" type="text" id="createUser" autocomplete="off" placeholder="Nome">
-                    <input class="margin-bottom-3" type="password" id="createPassword" placeholder="Senha">
-                    <input class="margin-bottom-3" type="password" id="repeatPassword" placeholder="Confirme sua senha">
-                    <input class="margin-bottom-3" type="submit" class="submit" onclick="onClickCreateUser(event)" value="Salvar">
+            <form id="form-register" class="disabled" autocomplete="off">
+                <div class="widthForms m-auto card col-6 p-1 text-left bg-blue">
+                    <h1 class="card-header text-white h2 mb-1">Sign Up</h1>
+                    <div class="card-body bg-white d-flex flex-column">
+                        <input class="mb-1" type="text" id="createUser" autocomplete="off" placeholder="Nome">
+                        <input class="mb-1" type="password" id="createPassword" placeholder="Senha">
+                        <input class="mb-1" type="password" id="repeatPassword" placeholder="Confirme sua senha">
+                        <input class="mb-1 btn btn-primary" type="submit" class="submit" onclick="onClickCreateUser(event)" value="Criar Usuário">
+                    </div>
                 </div>
-                <a href="#" id="register-button" onclick="switchForm(event.target)">Já possuo uma conta</a>
+                <a class="text-white" href="#" id="register-button" onclick="switchForm(event.target)">Já possuo uma conta</a>
             </form>
         </div>
     </div>

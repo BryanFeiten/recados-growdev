@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bg-black {
+    background-color: rgb(27, 27, 27);
+}
+
+.widthForms {
+    min-width: 200px;
+}
+
+#logo {
+    padding: 0;
+    height: 100vh;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.disabled {
+    display: none;
+}
+
+.bg-blue {
+    background-color: rgba(56, 109, 224, 0.747);
+}
+
+#logOut {
+    text-decoration: none;
+    padding: 10px;
+}
+
+#logOut:hover {
+    background-color: rgba(91, 117, 133, 0.356);
+    transition: background-color 0.3s ease-in-out;
+    border-radius: 5px;
+}
+

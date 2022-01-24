@@ -4,28 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/styles.css">
+    <link rel="stylesheet" href="./CSS/bootstrap.css">
+    <link rel="stylesheet" href="./CSS/complement.css">
     <title>Sobre</title>
 </head>
 <body>
-    <div id="header">
-        <a href="./index.html" onClick="onClickLogOut(event)">Log Out</a>
-        <h2>TO-DO LIST</h2>
-        <h2 id="userLogged"></h2>
+    <div class="container-fluid d-flex bg-dark justify-content-around align-items-center text-white p-3 h3 text-decoration-none" id="header">
+        <a id="logOut" class="text-uppercase text-white" href="./index.html" onClick="onClickLogOut(event)">Log Out</a>
+        <h2 class="h3">TO-DO LIST</h2>
+        <h2 class="h3" id="userLogged"></h2>
     </div>
-    <div class="containerCRUD">
-        <div class="controllsCRUD">
-            <form id="formCRUD">
-                <input type="text" id="descriptionCRUD" autocomplete="off" placeholder="Escreva seu descritivo">
-                <input type="text" id="textCRUD" autocomplete="off" placeholder="Escreva seu detalhamento">
-                <input type="submit" onclick="saveCRUD(event)" value="Salvar">
+    <div class="container-fluid containerCRUD table-responsible-sm">
+        <div class="container-fluid p-3 pb-4">
+            <form id="formCRUD" class="row">
+                <input class="ml-5 col-3" type="text" id="descriptionCRUD" autocomplete="off" placeholder="Descrição">
+                <input class="ml-4 col-7" type="text" id="textCRUD" autocomplete="off" placeholder="Detalhamento">
+                <input class="ml-1 btn btn-primary" type="submit" onclick="saveCRUD(event)" value="Salvar">
             </form>
         </div>
-        <div id="contentCRUD" class="contentCRUD">
-            
-        </div>
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th>Descrição</th>
+                <th>Detalhamento</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody id="contentCRUD">
+            </tbody>
     </div>
-
     <script src="./JS/scripts.js"></script>
 </body>
 </html>

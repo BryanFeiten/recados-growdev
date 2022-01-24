@@ -12,7 +12,13 @@ if(location.href.indexOf('sobre.html')>=0) {
     const containerCRUD = document.querySelector('.contentCRUD');
     updateMessages();
 }
- 
+
+const password = document.querySelector('#password');
+const eye = document.querySelector('#eye');
+
+eye.addEventListener('mousedown', () => password.type = 'text');
+eye.addEventListener('mouseup', () => password.type = 'password');
+eye.addEventListener('mousemove', () => password.type = 'password');
 
 function onClickCreateUser(event) {
     event.preventDefault();
@@ -44,6 +50,7 @@ function onClickCreateUser(event) {
     }
 
     clearFields(name, password, repeatPassword);
+    switchForm();
 }
 
 function checkInputs(name, password, repeatPassword) {
@@ -151,7 +158,20 @@ function updateMessages() {
     const getUsers = JSON.parse(localStorage.getItem('users'));
     const contentCRUD = document.querySelector('#contentCRUD');
     contentCRUD.innerHTML = '';
-    getUsers.find(p=>p.logged===true).messages.map(message => contentCRUD.innerHTML += `<div class="message" data-id="${message.messageId}"><p>${message.description}</p><p>${message.textMessage}</p><div class="controllMessage"><a href="#" onclick="editMessage(event)" id="btnEdit">Editar</a><a href="#" onclick="removeMessage(event)" id="btnDelete">Delete</a></div></div>`);
+    let count = 1;
+    getUsers.find(p=>p.logged===true).messages.map(message => {
+        contentCRUD.innerHTML += `
+        <tr data-id="${message.messageId}">
+            <th>${count}</th>
+            <td>${message.description}</td>
+            <td>${message.textMessage}</td>
+            <td>
+                <a class="btn btn-danger" href="#" onclick="removeMessage(event)" id="btnDelete">Apagar</a>
+                <a class="btn btn-success" href="#" onclick="editMessage(event)" id="btnEdit">Editar</a>
+            </td>
+        </tr>`
+    count++;
+    })
 }
 
 function removeMessage(event) {
