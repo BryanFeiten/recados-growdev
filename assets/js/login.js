@@ -4,7 +4,7 @@ function checkLogin() {
     const users = getUsers();
     const userLogged = users.find(user => user.logged===true);
     if(userLogged) {
-        location.href = "./sobre.html"
+        location.href = "./about.html"
     }
 }
 
@@ -26,5 +26,5 @@ function onClickLogIn(event) {
         localStorage.setItem('users',JSON.stringify(users))
     };
     
-    location.href = './sobre.html'
+    location.href = './about.html'
 }
