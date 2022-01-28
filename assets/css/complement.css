@@ -45,13 +45,17 @@ div input {
     position: fixed;
     min-width: 3vw;
     min-height: 3vw;
-
     bottom: 30px;
     right: 30px;
     font-size: 18px;
     border-radius: 50%;
+    z-index: 5;
 }
 
 .text-min {
     font-size: 10px;
+}
+
+.border-rounded {
+    border-radius: 0 15px 15px 0;
 }

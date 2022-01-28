@@ -25,6 +25,7 @@ function onClickLogOut(event) {
 }
 
 function saveCRUD(event) {
+    const users = getUsers();
     event.preventDefault();
     const messages = getMessages();
     const userLogged = users.find(p=>p.logged===true);
@@ -76,25 +77,25 @@ function updateMessages(newMessages) {
         if(getUserLogged.userId === message.user) {      
         contentCRUD.innerHTML += `
         <tr data-id="${message.messageId}">
-            <th>${count}:${userOfMessage} <span class="text-min">- ${message.hours}h</span></th>
-            <td>${message.description}</td>
-            <td>${message.textMessage}</td>
-            <td>${message.privacityMessage}</td>
-            <td>
-                <a class="btn btn-danger" href="#" onclick="removeMessage(event)" id="btnDelete">Apagar</a>
-                <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editMessage" href="#" onclick="addIdForEditList(event)" id="btnEdit">Editar</a>
+            <td class="col-1 h6 bg-dark text-white border-rounded">${count} - ${userOfMessage}<span class="text-min"><br>${message.date} - ${message.hours}h${message.edited === true ? '*' : ''}</span></td>
+            <td class="col-3">${message.description}</td>
+            <td class="col-5">${message.textMessage}</td>
+            <td class="col-1">${message.privacityMessage}</td>
+            <td class="col-2 text-center">
+                <a class="btn btn-danger p-1" href="#" onclick="removeMessage(event)" id="btnDelete">Apagar</a>
+                <a class="btn btn-success p-1" data-bs-toggle="modal" data-bs-target="#editMessage" href="#" onclick="addIdForEditList(event)" id="btnEdit">Editar</a>
             </td>
         </tr>`
     count++;
         } else if (message.privacityMessage === 'Pública') {
             contentCRUD.innerHTML += `
-        <tr data-id="${message.messageId}">
-            <th>${count}:${userOfMessage} <span class="text-min">- ${message.hours}h</span></th>
-            <td>${message.description}</td>
-            <td>${message.textMessage}</td>
-            <td>${message.privacityMessage}</td>
-            <td></td>
-        </tr>`
+            <tr data-id="${message.messageId}">
+                <td class="col-1 h6 bg-secondary text-white border-rounded">${count} - ${userOfMessage}<span class="text-min"><br>${message.date} - ${message.hours}h</span></td>
+                <td class="col-3">${message.description}</td>
+                <td class="col-5">${message.textMessage}</td>
+                <td class="col-1">${message.privacityMessage}</td>
+                <td class="col-2 text-center text-min">Mensagem de outro usuário</td>
+            </tr>`
     count++;
         }
     });
@@ -114,14 +115,17 @@ function removeMessage(event) {
 
 function editMessage() {
     const dataId = parseInt(document.querySelector('#editMessageId').getAttribute('data-id'));
+    const privacityMessage = document.querySelector('#editFormCRUD').editPrivacityMessage.value;
     const changeDescription = document.querySelector('#editDescriptionCRUD').value;
     const changeText = document.querySelector('#editTextCRUD').value;
     const messages = getMessages();
     if(changeDescription.length >= 4 && changeText.length >= 4) {
         messages.filter(message => {
             if(message.messageId === dataId) {
+                message.privacityMessage = privacityMessage;
                 message.description = changeDescription;
                 message.textMessage = changeText;
+                message.edited = true;
             }
         })
         updateMessages(messages);

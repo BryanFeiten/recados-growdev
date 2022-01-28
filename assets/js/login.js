@@ -1,4 +1,4 @@
-checkLogin();
+document.addEventListener('DOMContentLoaded', checkLogin());
 
 function checkLogin() {
     const users = getUsers();

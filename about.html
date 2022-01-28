@@ -12,17 +12,17 @@
         <div class="container-fluid d-flex bg-dark justify-content-around align-items-center text-white p-3 h3 text-decoration-none" id="header">
             <a id="logOut" class="text-white" href="./index.html" onClick="onClickLogOut(event)">Sair</a>
             <h2 class="h3"><u>Recados</u></h2>
-            <h2 class="h3" id="userLogged"></h2>
+            <h2 class="h3 m-0" id="userLogged"></h2>
         </div>
         <div class="container-fluid containerCRUD table-responsible-sm">
-            <table class="table table-striped table-hover">
+            <table class="table table-hover">
                 <thead class="thead-dark">
                 <tr>
                     <th>#</th>
                     <th>Descrição</th>
                     <th>Detalhamento</th>
-                    <th>Privacidade</th>
-                    <th>Ação</th>
+                    <th class="text-center">Privacidade</th>
+                    <th class="text-center">Ação</th>
                 </tr>
                 </thead>
                 <tbody id="contentCRUD">
@@ -37,13 +37,12 @@
                         <a class="btn btn-close p-0" data-bs-dismiss="modal" aria-label="Close"><h5>&times;</h5></a>
                     </div>
                     <div class="modal-body d-flex flex-column">
-                        <form id="formCRUD">
+                        <form id="editFormCRUD">
                             <p>Por favor qualifique a privacidade do seu recado</p>
                             <div>
-                                <input type="radio" name="privacityMessage" id="publicMessage" checked="true" value="Pública">
-                                <label for="publicMessage">Pública</label>
-                                
-                                <input class="ml-3" type="radio" name="privacityMessage" id="privateMessage" value="Privada">
+                                <input type="radio" name="editPrivacityMessage" id="editPublicMessage" checked="true" value="Pública">
+                                <label for="publicMessage">Pública</label> 
+                                <input class="ml-3" type="radio" name="editPrivacityMessage" id="editPrivateMessage" value="Privada">
                                 <label for="privateMessage">Privada</label>
                             </div>
                             <input class="mb-2" type="text" id="descriptionCRUD" autocomplete="off" placeholder="Descrição">
@@ -66,6 +65,12 @@
                     </div>
                     <div class="modal-body d-flex flex-column">
                         <form id="editFormCRUD">
+                            <div>
+                                <input type="radio" name="privacityMessage" id="editPublicMessage" checked="true" value="Pública">
+                                <label for="publicMessage">Pública</label>
+                                <input class="ml-3" type="radio" name="privacityMessage" id="editPrivateMessage" value="Privada">
+                                <label for="privateMessage">Privada</label>
+                            </div>
                             <input class="mb-2" type="text" id="editDescriptionCRUD" autocomplete="off" placeholder="Nova descrição">
                             <textarea class="pl-1" id="editTextCRUD" autocomplete="off" placeholder="Novo detalhamento"></textarea>
                         </form>
