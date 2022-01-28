@@ -12,6 +12,16 @@ function checkLogin() {
     }
 }
 
+function listRecipients() {
+    const recipient = document.querySelector('#chooseRecipient');
+    const users = getUsers();
+    const userLogged = users.find(user => user.logged === true);
+    recipient.innerHTML = '';
+    users.map(user => {
+        userLogged !== user ? recipient.innerHTML += `<option value=${user.username}>${user.username}</option>` : '';
+    })
+}
+
 function getUsers() {
     return JSON.parse(localStorage.getItem('users')) || [];
 }
@@ -25,18 +35,17 @@ function onClickLogOut(event) {
 }
 
 function saveCRUD(event) {
-    const users = getUsers();
     event.preventDefault();
-    const messages = getMessages();
-    const userLogged = users.find(p=>p.logged===true);
-    const description = document.querySelector('#descriptionCRUD')
+    const users = getUsers();
+    const messages = getPrivateMessages();
+    const senderId = users.find(p=>p.logged===true).userId;
+    const recipientId = users.find(user => user.username === document.querySelector('#chooseRecipient').value).userId;
     const text = document.querySelector('#textCRUD');
-    const privacityMessage = document.querySelector('#formCRUD').privacityMessage;
 
-    checkMessage(description, text, userLogged, privacityMessage, messages);
+    checkMessage(senderId, recipientId, text, messages);
 }
 
-function checkMessage(description, text, userLogged, privacityMessage, messages) {
+function checkMessage(senderId, recipientId, text, messages) {
     const dateNow = new Date();
     const hourNow  = dateNow.getHours();
     const min     = dateNow.getMinutes();
@@ -46,18 +55,16 @@ function checkMessage(description, text, userLogged, privacityMessage, messages)
     const hours    = `${hourNow}:${min}`;
     const fullHours    = `${hourNow}:${min}:${sec}:${msec}`;
 
-    if(description.value.length>=5 && text.value.length>=5) {
+    if(text.value.length>=5) {
         messages.push({
-            user: userLogged.userId,
+            senderId,
+            recipientId,
             messageId: Math.floor(Math.random() * 99999) + Math.floor(Math.random() * 99999),
-            description: description.value,
             textMessage: text.value,
-            privacityMessage: privacityMessage.value,
             date,
             hours,
             fullHours,
         });
-        description.value = ''; 
         text.value = '';
         updateMessages(messages);
     } else {
@@ -66,34 +73,31 @@ function checkMessage(description, text, userLogged, privacityMessage, messages)
 }
 
 function updateMessages(newMessages) {
-    const getUsers = JSON.parse(localStorage.getItem('users'));
-    const messages = newMessages || getMessages();
+    const users = getUsers();
+    const messages = newMessages || getPrivateMessages();
     const contentCRUD = document.querySelector('#contentCRUD');
     contentCRUD.innerHTML = '';
     let count = 1;
-    const getUserLogged = getUsers.find(p=>p.logged===true);
+    const userLogged = users.find(p=>p.logged===true);
     messages.map(message => {
-        const userOfMessage = getUsers.find(user => user.userId === message.user).username
-        if(getUserLogged.userId === message.user) {      
+        const userOfMessage = users.find(user => user.userId === message.senderId).username
+        if(userLogged.userId === message.senderId) {      
         contentCRUD.innerHTML += `
         <tr data-id="${message.messageId}">
-            <td class="col-1 h6 bg-primary text-white border-rounded target" data-toggle="tooltip" data-placement="right" title="${message.date}-${message.hours}h">${count} - ${userOfMessage}</td>
-            <td class="col-3">${message.description}</td>
+            
+            <td class="col-1 h6 bg-primary text-white border-rounded">${count} - ${userOfMessage}<span class="text-min"><br>${message.date} - ${message.hours}h${message.edited === true ? '*' : ''}</span></td>
             <td class="col-5">${message.textMessage}</td>
-            <td class="col-1">${message.privacityMessage}</td>
             <td class="col-2 text-center">
                 <a class="btn btn-danger p-1" href="#" onclick="removeMessage(event)" id="btnDelete">Apagar</a>
                 <a class="btn btn-success p-1" data-bs-toggle="modal" data-bs-target="#editMessage" href="#" onclick="addIdForEditList(event)" id="btnEdit">Editar</a>
             </td>
         </tr>`
     count++;
-        } else if (message.privacityMessage === 'Pública') {
+        } else if (message.recipientId === userLogged.userId) {
             contentCRUD.innerHTML += `
             <tr data-id="${message.messageId}">
-                <td class="col-1 h6 bg-secondary text-white border-rounded target" data-toggle="tooltip" data-placement="right" title="${message.date}-${message.hours}h">${count} - ${userOfMessage}</td>
-                <td class="col-3">${message.description}</td>
+                <td class="col-1 h6 bg-secondary text-white border-rounded">${count} - ${userOfMessage}<span class="text-min"><br>${message.date} - ${message.hours}h</span></td>
                 <td class="col-5">${message.textMessage}</td>
-                <td class="col-1">${message.privacityMessage}</td>
                 <td class="col-2 text-center text-min">Mensagem de outro usuário</td>
             </tr>`
     count++;
@@ -103,12 +107,12 @@ function updateMessages(newMessages) {
 }
 
 function loadMessages(messages) {
-    localStorage.setItem('messages', JSON.stringify(messages))
+    localStorage.setItem('privateMessages', JSON.stringify(messages))
 }
 
 function removeMessage(event) {
     const dataId = parseInt(event.target.parentNode.parentNode.getAttribute('data-id'));
-    let messages = getMessages();
+    let messages = getPrivateMessages();
     messages = messages.filter(message => message.messageId !== dataId);
     updateMessages(messages);
 }
@@ -118,7 +122,7 @@ function editMessage() {
     const privacityMessage = document.querySelector('#editFormCRUD').editPrivacityMessage.value;
     const changeDescription = document.querySelector('#editDescriptionCRUD').value;
     const changeText = document.querySelector('#editTextCRUD').value;
-    const messages = getMessages();
+    const messages = getPrivateMessages();
     if(changeDescription.length >= 4 && changeText.length >= 4) {
         messages.filter(message => {
             if(message.messageId === dataId) {
@@ -136,7 +140,7 @@ function editMessage() {
 
 function addIdForEditList(event) {
     const dataId = parseInt(event.target.parentNode.parentNode.getAttribute('data-id'));
-    const messages = getMessages();
+    const messages = getPrivateMessages();
     const message = messages.find(message => message.messageId === dataId);
     const spanMessageId = document.querySelector('#editMessageId');
     spanMessageId.setAttribute('data-id', dataId)
@@ -147,8 +151,8 @@ function addIdForEditList(event) {
     changeText.value = message.textMessage;
 }
 
-function getMessages() {
-    return JSON.parse(localStorage.getItem('messages')) || [];
+function getPrivateMessages() {
+    return JSON.parse(localStorage.getItem('privateMessages')) || [];
 }
 
 function updateUsers(newUsers) {
