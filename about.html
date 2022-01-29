@@ -38,12 +38,12 @@
                         <a class="btn btn-close p-0" data-bs-dismiss="modal" aria-label="Close"><h5>&times;</h5></a>
                     </div>
                     <div class="modal-body d-flex flex-column">
-                        <form id="editFormCRUD">
+                        <form id="formCRUD">
                             <p>Por favor qualifique a privacidade do seu recado</p>
                             <div>
-                                <input type="radio" name="editPrivacityMessage" id="editPublicMessage" checked="true" value="Pública">
+                                <input type="radio" name="privacityMessage" id="publicMessage" checked="true" value="Pública">
                                 <label for="publicMessage">Pública</label> 
-                                <input class="ml-3" type="radio" name="editPrivacityMessage" id="editPrivateMessage" value="Privada">
+                                <input class="ml-3" type="radio" name="privacityMessage" id="privateMessage" value="Privada">
                                 <label for="privateMessage">Privada</label>
                             </div>
                             <input class="mb-2" type="text" id="descriptionCRUD" autocomplete="off" placeholder="Descrição">
@@ -67,9 +67,9 @@
                     <div class="modal-body d-flex flex-column">
                         <form id="editFormCRUD">
                             <div>
-                                <input type="radio" name="privacityMessage" id="editPublicMessage" checked="true" value="Pública">
+                                <input type="radio" name="editPrivacityMessage" id="editPublicMessage" checked="true" value="Pública">
                                 <label for="publicMessage">Pública</label>
-                                <input class="ml-3" type="radio" name="privacityMessage" id="editPrivateMessage" value="Privada">
+                                <input class="ml-3" type="radio" name="editPrivacityMessage" id="editPrivateMessage" value="Privada">
                                 <label for="privateMessage">Privada</label>
                             </div>
                             <input class="mb-2" type="text" id="editDescriptionCRUD" autocomplete="off" placeholder="Nova descrição">

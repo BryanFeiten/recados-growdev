@@ -31,8 +31,8 @@ function saveCRUD(event) {
     const userLogged = users.find(p=>p.logged===true);
     const description = document.querySelector('#descriptionCRUD')
     const text = document.querySelector('#textCRUD');
+    console.log(document.querySelector('#formCRUD').privacityMessage);
     const privacityMessage = document.querySelector('#formCRUD').privacityMessage;
-
     checkMessage(description, text, userLogged, privacityMessage, messages);
 }
 
@@ -77,7 +77,7 @@ function updateMessages(newMessages) {
         if(getUserLogged.userId === message.user) {      
         contentCRUD.innerHTML += `
         <tr data-id="${message.messageId}">
-            <td class="col-1 h6 bg-primary text-white border-rounded target" data-toggle="tooltip" data-placement="right" title="${message.date}-${message.hours}h">${count} - ${userOfMessage}</td>
+            <td class="col-1 h6 bg-primary text-white border-rounded target" data-toggle="tooltip" data-placement="right" title="${message.date}-${message.hours}h">${count}- ${userOfMessage}</td>
             <td class="col-3">${message.description}</td>
             <td class="col-5">${message.textMessage}</td>
             <td class="col-1">${message.privacityMessage}</td>
@@ -90,7 +90,7 @@ function updateMessages(newMessages) {
         } else if (message.privacityMessage === 'Pública') {
             contentCRUD.innerHTML += `
             <tr data-id="${message.messageId}">
-                <td class="col-1 h6 bg-secondary text-white border-rounded target" data-toggle="tooltip" data-placement="right" title="${message.date}-${message.hours}h">${count} - ${userOfMessage}</td>
+                <td class="col-1 h6 bg-secondary text-white border-rounded target" data-toggle="tooltip" data-placement="right" title="${message.date}-${message.hours}h">${count}- ${userOfMessage}</td>
                 <td class="col-3">${message.description}</td>
                 <td class="col-5">${message.textMessage}</td>
                 <td class="col-1">${message.privacityMessage}</td>
