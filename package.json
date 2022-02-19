@@ -1,0 +1,27 @@
+{
+  "name": "recados_growdev",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.18",
+    "@types/typescript": "^2.0.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2"
+  },
+  "scripts": {
+    "start": "node ./dist",
+    "dev": "ts-node-dev --respawn --transpile-only src/index"
+  },
+  "engines": {
+    "node": "16.13.1"
+  },
+  "repository": "https://github.com/BryanFeiten/Recados-Growdev.git",
+  "author": "Bryan Feiten <bryan.felipe.feiten@gmail.com>"
+}

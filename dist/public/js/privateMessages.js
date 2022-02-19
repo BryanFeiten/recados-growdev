@@ -132,7 +132,6 @@ function removeMessage(event) {
     updateMessages(messages);
 }
 
-
 function getPrivateMessages() {
     return JSON.parse(localStorage.getItem('privateMessages')) || [];
 }
